@@ -1,0 +1,2 @@
+/Users/mendoser/Desktop/WED/clinic_app/android/app/.cxx/RelWithDebInfo/3y631y40/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/mendoser/Desktop/WED/clinic_app/android/app/.cxx/RelWithDebInfo/3y631y40/armeabi-v7a/CMakeFiles/rebuild_cache.dir

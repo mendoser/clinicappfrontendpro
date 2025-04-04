@@ -1,0 +1,2 @@
+/Users/mendoser/Desktop/WED/clinic_app/android/app/.cxx/RelWithDebInfo/3y631y40/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/mendoser/Desktop/WED/clinic_app/android/app/.cxx/RelWithDebInfo/3y631y40/arm64-v8a/CMakeFiles/rebuild_cache.dir
