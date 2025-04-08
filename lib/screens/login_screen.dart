@@ -28,7 +28,6 @@ class LoginScreenState extends State<LoginScreen> {
       String? token = await authService.login(emailController.text, passwordController.text);
 
       setState(() => isLoading = false);
-
       if (token != null) {
         // Save the token using SharedPreferences
         SharedPreferences prefs = await SharedPreferences.getInstance();

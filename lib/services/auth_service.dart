@@ -75,7 +75,7 @@ class AuthService {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        return data['data']; // Returns a list of patients
+        return data; // Returns a list of patients
       } else {
         throw Exception("Failed to fetch patients");
       }
@@ -84,9 +84,13 @@ class AuthService {
     }
   }
 
+
+
+
+
   // Function to get critical patients
   Future<List<dynamic>> getCriticalPatients(String token) async {
-    final url = Uri.parse("$baseUrl/patients/critical");
+    final url = Uri.parse("$baseUrl/patients?hasCriticalData=true");
     try {
       final response = await http.get(
         url,
@@ -98,7 +102,7 @@ class AuthService {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        return data['data'];
+        return data;
       } else {
         throw Exception("Failed to fetch critical patients");
       }
@@ -164,6 +168,38 @@ class AuthService {
 
   // Function to create critical data for a patient
   Future<Map<String, dynamic>> addCriticalData(
+      String patientId, String bloodPressure, int heartRate, int oxygenLevel, String token) async {
+    final url = Uri.parse("$baseUrl/patients/$patientId/critical-data");
+print("CriticalData: $bloodPressure , $heartRate , $oxygenLevel");
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+        body: jsonEncode({
+          "bloodPressure": bloodPressure,
+          "heartRate": heartRate,
+          "oxygenLevel": oxygenLevel,
+        }),
+      );
+print("CriticalData: $response");
+
+      if (response.statusCode == 201) {
+        
+        final data = jsonDecode(response.body);
+        return {'success': true, 'data': data};
+      } else {
+        final data = jsonDecode(response.body);
+        return {'success': false, 'message': data['message']};
+      }
+    } catch (e) {
+      return {'success': false, 'message': "Error: $e"};
+    }
+  }
+//addcritical data2
+  Future<Map<String, dynamic>> addCriticalData2(
       String patientId, String bloodPressure, int heartRate, int oxygenLevel, String token) async {
     final url = Uri.parse("$baseUrl/patients/$patientId/critical-data");
 

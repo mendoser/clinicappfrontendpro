@@ -1,6 +1,9 @@
+import 'package:clinic_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(PatientManagementApp());
@@ -38,6 +41,7 @@ class _PatientListScreenState extends State<PatientListScreen> {
   List<Map<String, dynamic>> filteredPatients = [];
   bool isLoading = true;
   bool hasError = false;
+final AuthService authService = AuthService();
 
   @override
   void initState() {
@@ -46,31 +50,23 @@ class _PatientListScreenState extends State<PatientListScreen> {
   }
 
   Future<void> _fetchPatients() async {
-    setState(() {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+String token = prefs.getString('auth_token')?? '';
+  setState(() {
       isLoading = true;
       hasError = false;
     });
 
     try {
-      final response = await http.get(
-        Uri.parse('http://10.0.2.2:6000/api/patients'),
-        headers: {'Content-Type': 'application/json'},
-      );
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        if (data is List) {
+      List <dynamic> data = await authService.getAllPatients(token);
+      
           setState(() {
             patients = data.cast<Map<String, dynamic>>();
             filteredPatients = List.from(patients);
             isLoading = false;
           });
-        } else {
-          throw Exception('Invalid data format');
-        }
-      } else {
-        throw Exception('Failed to load patients');
-      }
+        
+     
     } catch (error) {
       setState(() {
         hasError = true;
@@ -231,7 +227,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
           }),
         );
 
-        if (response.statusCode == 201 || response.statusCode == 200) {
+        if (response.statusCode == 201 || response.statusCode == 401) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("Patient added successfully!"),
             backgroundColor: Colors.green,

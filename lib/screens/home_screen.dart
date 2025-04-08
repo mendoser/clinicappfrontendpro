@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clinic_app/screens/patient_list_screen.dart';
 import 'package:clinic_app/screens/add_patient_screen.dart' as add_patient;
-import 'package:clinic_app/screens/patient_details_screen.dart' as details;
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,21 +19,42 @@ class HomeScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/');
-              },
+              },style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 126, 110, 226),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
               child: const Text("View Patient List"),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/addPatient');
-              },
+              },style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 133, 241, 145),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
               child: const Text("Add Patient"),
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/patientDetails');
-              },
-              child: const Text("View Patient Details"),
+                Navigator.pushNamed(context, '/criticalPatients');
+              },style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 133, 241, 145),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              child: const Text("View Critical Patients"),
             ),
+          
+      
+            
           ],
         ),
       ),
@@ -53,7 +73,6 @@ void main() {
     routes: {
       '/': (context) => PatientListScreen(),
       '/addPatient': (context) => add_patient.AddPatientScreen(),
-      '/patientDetails': (context) => details.PatientDetailsScreen(),
       '/home': (context) => HomeScreen(), // Navigate here after login
     },
     onUnknownRoute: (settings) {

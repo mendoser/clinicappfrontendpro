@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class AddClinicalDataScreen extends StatefulWidget {
   @override
   _AddClinicalDataScreenState createState() => _AddClinicalDataScreenState();
@@ -40,8 +41,8 @@ class _AddClinicalDataScreenState extends State<AddClinicalDataScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, String>? patient = 
-        ModalRoute.of(context)!.settings.arguments as Map<String, String>?;
+    Map<String, dynamic>? patient = 
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
     
     return Scaffold(
       appBar: AppBar(

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 class PatientDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Map<String, String>? patient =
-        ModalRoute.of(context)!.settings.arguments as Map<String, String>?;
+    final Map<String, dynamic>? patient =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
 
+        print(patient);
     return Scaffold(
       appBar: AppBar(
         title: Text(patient?['name'] ?? 'Patient Details'),
@@ -50,9 +51,11 @@ class PatientDetailsScreen extends StatelessWidget {
                         children: [
                           Icon(Icons.person_pin, color: Colors.blue[600]),
                           SizedBox(width: 10),
-                          Text(
-                            'Patient ID: ${patient?['id'] ?? 'N/A'}',
-                            style: TextStyle(fontSize: 18),
+                          Expanded(
+                            child: Text(
+                              'Patient ID: ${patient?['_id'] ?? 'N/A'}',
+                              style: TextStyle(fontSize: 18),
+                            ),
                           ),
                         ],
                       ),
@@ -62,12 +65,14 @@ class PatientDetailsScreen extends StatelessWidget {
                           children: [
                             Icon(Icons.local_hospital, color: Colors.red[600]),
                             SizedBox(width: 10),
-                            Text(
-                              'Condition: ${patient?['condition']}',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.red[700],
-                                fontWeight: FontWeight.w500,
+                            Expanded(
+                              child: Text(
+                                'Condition: ${patient?['condition']}',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.red[700],
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ],
@@ -91,6 +96,23 @@ class PatientDetailsScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(height: 10),
+              ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/addCriticalPatient',arguments: patient);
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 235, 78, 112),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              child: const Text("Add Critical Patient"),
+            ),
+            
+            
+            
             ],
           ),
         ),

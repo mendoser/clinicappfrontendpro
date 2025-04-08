@@ -3,7 +3,10 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class AddPatientScreen extends StatefulWidget {
+  const AddPatientScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _AddPatientScreenState createState() => _AddPatientScreenState();
 }
 
@@ -15,6 +18,8 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
   final TextEditingController conditionController = TextEditingController(); // Added Condition field
   String selectedGender = "Male";
   final _formKey = GlobalKey<FormState>();
+  
+  get token => null;
 
   // Function to send the patient data to the backend
  Future<void> _savePatient() async {
@@ -29,9 +34,11 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
     try {
       // Use 10.0.2.2 for Android emulator
       final response = await http.post(
-        Uri.parse('http://localhost:6000/api/patients'), // Updated for Android emulator
+        Uri.parse('http://127.0.0.1:6000/api/patients/add'), // Updated for Android emulator
         headers: {
           'Content-Type': 'application/json',
+                    'Authorization': 'Bearer $token', // 👈 Add token here
+
         },
         body: jsonEncode({
           'name': name,
@@ -46,7 +53,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
       print('Response Status Code: ${response.statusCode}');
       print('Response Body: ${response.body}');
 
-      if (response.statusCode == 201 || response.statusCode == 200) {
+      if (response.statusCode == 201 || response.statusCode == 401) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Patient $name added successfully!'),
